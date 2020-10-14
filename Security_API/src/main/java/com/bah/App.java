@@ -22,3 +22,4 @@ public io.opentracing.Tracer jaegerTracer() {
         .getTracer();
 }
 }
+

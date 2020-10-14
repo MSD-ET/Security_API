@@ -10,12 +10,16 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.bah.domain.Token;
 
-public class JWTHelper {
+public class JWTHelper implements JWTUtil  {
 	/*
 	 * https://github.com/auth0/java-jwt
 	 */
-	public static String createToken(String scopes) {
+	@Override
+	public Token createToken(String scopes) {
+		
+	
 		
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256("secret");
@@ -27,13 +31,13 @@ public class JWTHelper {
 		        .withClaim("scopes", scopes)
 		        .withExpiresAt(expireDate)
 		        .sign(algorithm);
-		    return token;
+		    return new Token(token);
 		} catch (JWTCreationException exception){
 			return null;
 		}	
 	}
-
-	public static boolean verifyToken(String token) {
+	@Override
+	public boolean verifyToken(String token) {
 
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256("secret");
@@ -60,8 +64,8 @@ public class JWTHelper {
 			return null;
 		}
 	}
-	
-	public static String getScopes(String token) {
+	@Override
+	public String getScopes(String token) {
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256("secret");
 		    JWTVerifier verifier = JWT.require(algorithm)
