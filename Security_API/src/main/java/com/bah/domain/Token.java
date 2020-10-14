@@ -1,6 +1,11 @@
 package com.bah.domain;
 
 public class Token {
+	@Override
+	public String toString() {
+		return "Token [token=" + token + "]";
+	}
+
 	String token;
 
 	public Token(String token) {

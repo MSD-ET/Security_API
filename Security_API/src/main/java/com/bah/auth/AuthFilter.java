@@ -19,7 +19,7 @@ import com.bah.util.JWTHelper;
 public class AuthFilter implements Filter {
 
 	
-//	 JWTUtil jwtUtil = new JWTHelper();
+	 JWTHelper jwtUtil = new JWTHelper();
 	
 	private String api_scope = "com.api.customer.r";
 
