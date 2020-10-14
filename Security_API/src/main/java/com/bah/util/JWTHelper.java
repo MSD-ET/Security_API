@@ -12,12 +12,12 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bah.domain.Token;
 
-public class JWTHelper implements JWTUtil  {
+public class JWTHelper  {
 	/*
 	 * https://github.com/auth0/java-jwt
 	 */
-	@Override
-	public Token createToken(String scopes) {
+	
+	public static Token createToken(String scopes) {
 		
 	
 		
@@ -36,8 +36,8 @@ public class JWTHelper implements JWTUtil  {
 			return null;
 		}	
 	}
-	@Override
-	public boolean verifyToken(String token) {
+	
+	public static boolean verifyToken(String token) {
 
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256("secret");
@@ -64,8 +64,8 @@ public class JWTHelper implements JWTUtil  {
 			return null;
 		}
 	}
-	@Override
-	public String getScopes(String token) {
+	
+	public static String getScopes(String token) {
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256("secret");
 		    JWTVerifier verifier = JWT.require(algorithm)

@@ -27,7 +27,7 @@ public class TokenAPI {
 	
 	//private static Key key = AuthFilter.key;	
 	public static Token appUserToken;
-	
+
 	
 	
 	@GetMapping
@@ -37,6 +37,8 @@ public class TokenAPI {
 	
 	@PostMapping	
 	public ResponseEntity<?> createTokenForCustomer(@RequestBody Customer customer) {
+		System.out.println("Create Token for Customer: " + customer);
+		
 		
 		String username = customer.getName();
 		String password = customer.getPassword();
@@ -75,18 +77,19 @@ public class TokenAPI {
 	}
 	
     private static Token createToken(String username) {
-    	String scopes = "com.bah.data.apis";    	// special case for application user
+    	String scopes = "com.api.customer.r";    	// special case for application user
     	if( username.equalsIgnoreCase("ApiClientApp")) {
     		scopes = "com.bah.auth.apis";
     	}
-    	String token_string = JWTHelper.createToken(scopes);
+    	Token token = JWTHelper.createToken(scopes);
     
     	
-    	return new Token(token_string);
+    	return token;
     }
     
     
 	private Customer getCustomerByNameFromCustomerAPI(String username) {
+		System.out.println("getCustomerByNameFromCustomerAPI");
 		try {
 
 			URL url = new URL("http://localhost:8080/api/customers/byname/" + username);
@@ -96,6 +99,8 @@ public class TokenAPI {
 			Token token = getAppUserToken();
 			conn.setRequestProperty("authorization", "Bearer " + token.getToken());
 
+			System.out.println("Connection out get response code");
+			
 			if (conn.getResponseCode() != 200) {
 				return null;
 			} else {
@@ -106,7 +111,9 @@ public class TokenAPI {
 					output += out;
 				}
 				conn.disconnect();
-				return CustomerFactory.getCustomer(output);
+				Customer customer = CustomerFactory.getCustomer(output);
+				System.out.println("Get customer by name: " + customer);
+				return customer;
 			}
 
 		} catch (MalformedURLException e) {

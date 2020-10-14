@@ -10,6 +10,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="CUSTOMERS")
 public class Customer {
+	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	long id;
@@ -51,6 +53,11 @@ public class Customer {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + "]";
 	}
 	
 }

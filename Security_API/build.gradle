@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 description = "Project-Auth-APIs"
 
-mainClassName = "com.webage.App"
+mainClassName = "com.bah.App"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
 import com.bah.util.JWTHelper;
-import com.bah.util.JWTUtil;
+
 
 @Component
 public class AuthFilter implements Filter {
 
 	
-	 JWTUtil jwtUtil = new JWTHelper();
+//	 JWTUtil jwtUtil = new JWTHelper();
 	
 	private String api_scope = "com.api.customer.r";
 
@@ -30,20 +30,28 @@ public class AuthFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String uri = req.getRequestURI();
-		if (uri.startsWith("/token")) {
-			System.out.println("Token is being processed.");
+		if (uri.startsWith("/account/token")) {
+			System.out.println("AuthFilter Token is being processed.");
 			// continue on to get-token endpoint
 			chain.doFilter(request, response);
 			return;
 		} else {
-			System.out.println("checking for a token");
 			// check JWT token
 			String authheader = req.getHeader("authorization");
+			System.out.println("AuthHeader Token is being processed: " + authheader);
 			if (authheader != null && authheader.length() > 7 && authheader.startsWith("Bearer")) {
 				String jwt_token = authheader.substring(7, authheader.length());
-				if (jwtUtil.verifyToken(jwt_token)) {
-					String request_scopes = jwtUtil.getScopes(jwt_token);
+				
+				System.out.println("This is my jwt token: " + jwt_token);
+				
+				if (JWTHelper.verifyToken(jwt_token)) {
+				
+					String request_scopes = JWTHelper.getScopes(jwt_token);
+					System.out.println("Print out request scopes: " + request_scopes);
 					if (request_scopes.contains(api_scope)) {
+						
+						System.out.println("token hits");
+						
 						// continue on to api
 						chain.doFilter(request, response);
 						return;
@@ -52,6 +60,8 @@ public class AuthFilter implements Filter {
 			}
 		}
 
+		System.out.println("Authentication failed");
+		
 		// reject request and return error instead of data
 		res.sendError(HttpServletResponse.SC_FORBIDDEN, "failed authentication");
 	}
