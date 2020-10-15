@@ -24,6 +24,7 @@ import com.bah.domain.Token;
 @RestController
 @RequestMapping("/register")
 public class RegisterAPI {
+	String dataAPiHost= "localhost:8080";
 
 	@PostMapping
 	public ResponseEntity<?> registerCustomer(@RequestBody Customer newCustomer, UriComponentsBuilder uri) {
@@ -46,9 +47,13 @@ public class RegisterAPI {
 	}
 
 	private void postNewCustomerToCustomerAPI(String json_string) {
+		String apiHost = System.getenv("API_HOST");
 		try {
+				if(apiHost ==null) { apiHost= this.dataAPiHost;}
+					 //line 54 changed username to json_string
+			URL url = new URL("http://" + apiHost + "/api/customers/byname/" + json_string);
 
-			URL url = new URL("http://localhost:8080/api/customers");
+			//url = new URL("http://localhost:8080/api/customers");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");

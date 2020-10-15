@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class ServiceAPI {
+	
+	String apiHost = System.getenv("API_HOST");
+	String apiURL = "http://" + apiHost + "/api/customers";
 
 	public static long instanceId = new Random().nextInt();
 	public static int count = 0;
