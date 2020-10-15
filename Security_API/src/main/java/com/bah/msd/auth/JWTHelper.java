@@ -1,4 +1,4 @@
-package com.bah.util;
+package com.bah.msd.auth;
 
 import java.util.Date;
 import java.util.Map;

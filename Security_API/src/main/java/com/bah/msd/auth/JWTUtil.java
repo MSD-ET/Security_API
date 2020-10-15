@@ -1,4 +1,4 @@
-package com.bah.util;
+package com.bah.msd.auth;
 
 import com.bah.domain.Token;
 

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bah.domain.Customer;
 import com.bah.domain.CustomerFactory;
 import com.bah.domain.Token;
-import com.bah.util.JWTHelper;
-import com.bah.util.JWTUtil;
+import com.bah.msd.auth.JWTHelper;
+import com.bah.msd.auth.JWTUtil;
 
 @RestController
 @RequestMapping("/token")
@@ -79,7 +79,7 @@ public class TokenAPI {
     private static Token createToken(String username) {
     	String scopes = "com.api.customer.r";    	// special case for application user
     	if( username.equalsIgnoreCase("ApiClientApp")) {
-    		scopes = "com.bah.auth.apis";
+    		scopes = "com.api.customer.r";
     	}
     	Token token = JWTHelper.createToken(scopes);
     

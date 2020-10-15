@@ -51,7 +51,9 @@ public class RegisterAPI {
 		try {
 				if(apiHost ==null) { apiHost= this.dataAPiHost;}
 					 //line 54 changed username to json_string
-			URL url = new URL("http://" + apiHost + "/api/customers/byname/" + json_string);
+				String urlString = "http://" + apiHost + "/api/customers";
+				System.out.println("This is url string:" + urlString);
+			URL url = new URL(urlString);
 
 			//url = new URL("http://localhost:8080/api/customers");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -67,6 +69,7 @@ public class RegisterAPI {
 			os.flush();
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+				System.out.println("connection response code:" + conn.getResponseCode());
 				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
 			}
 
